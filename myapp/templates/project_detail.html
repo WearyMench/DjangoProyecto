@@ -1,0 +1,35 @@
+<h1>Proyecto: {{ project.name }}</h1>
+<p>
+  <a href="{% url 'edit_project' project.id %}">Editar Proyecto</a> |
+  <a
+    href="{% url 'delete_project' project.id %}"
+    onclick="return confirm('¿Eliminar este proyecto y todas sus tareas?')"
+    >Eliminar Proyecto</a
+  >
+</p>
+
+<h2>Tareas</h2>
+<ul>
+  {% for task in tasks %}
+  <li>
+    <strong>{{ task.title }}</strong> - {{ task.get_status_display }}<br />
+    <em>{{ task.description }}</em><br />
+    <a href="{% url 'edit_task' task.id %}">Editar</a> |
+    <a
+      href="{% url 'delete_task' task.id %}"
+      onclick="return confirm('¿Estás seguro de eliminar esta tarea?')"
+      >Eliminar</a
+    >
+  </li>
+  {% empty %}
+  <li>No hay tareas todavía.</li>
+  {% endfor %}
+</ul>
+
+<h2>Agregar Tarea</h2>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Crear Tarea</button>
+</form>
+
+<p><a href="{% url 'projects_list' %}">Volver a Proyectos</a></p>
