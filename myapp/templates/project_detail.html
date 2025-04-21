@@ -1,35 +1,35 @@
-<h1>Proyecto: {{ project.name }}</h1>
+<h1>Project: {{ project.name }}</h1>
 <p>
-  <a href="{% url 'edit_project' project.id %}">Editar Proyecto</a> |
+  <a href="{% url 'edit_project' project.id %}">Edit Project</a> |
   <a
     href="{% url 'delete_project' project.id %}"
-    onclick="return confirm('¿Eliminar este proyecto y todas sus tareas?')"
-    >Eliminar Proyecto</a
+    onclick="return confirm('Delete this project and all its tasks?')"
+    >Delete Project</a
   >
 </p>
 
-<h2>Tareas</h2>
+<h2>Tasks</h2>
 <ul>
   {% for task in tasks %}
   <li>
     <strong>{{ task.title }}</strong> - {{ task.get_status_display }}<br />
     <em>{{ task.description }}</em><br />
-    <a href="{% url 'edit_task' task.id %}">Editar</a> |
+    <a href="{% url 'edit_task' task.id %}">Edit</a> |
     <a
       href="{% url 'delete_task' task.id %}"
-      onclick="return confirm('¿Estás seguro de eliminar esta tarea?')"
-      >Eliminar</a
+      onclick="return confirm('Are you sure you want to delete this task?')"
+      >Delete</a
     >
   </li>
   {% empty %}
-  <li>No hay tareas todavía.</li>
+  <li>No tasks yet.</li>
   {% endfor %}
 </ul>
 
-<h2>Agregar Tarea</h2>
+<h2>Add Task</h2>
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Crear Tarea</button>
+  <button type="submit">Create Task</button>
 </form>
 
-<p><a href="{% url 'projects_list' %}">Volver a Proyectos</a></p>
+<p><a href="{% url 'projects_list' %}">Back to Projects</a></p>

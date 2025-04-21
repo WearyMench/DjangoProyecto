@@ -1,8 +1,8 @@
-<h1>Editar Proyecto: {{ project.name }}</h1>
+<h1>Edit Project: {{ project.name }}</h1>
 
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Guardar Cambios</button>
+  <button type="submit">Save Changes</button>
 </form>
 
-<p><a href="{% url 'projects_list' %}">Volver a la lista de proyectos</a></p>
+<p><a href="{% url 'projects_list' %}">Back to Project List</a></p>

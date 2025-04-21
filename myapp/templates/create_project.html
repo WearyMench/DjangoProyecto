@@ -1,8 +1,8 @@
-<h1>Crear Nuevo Proyecto</h1>
+<h1>Create New Project</h1>
 
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Crear Proyecto</button>
+  <button type="submit">Create Project</button>
 </form>
 
-<p><a href="{% url 'projects_list' %}">Volver a la lista de proyectos</a></p>
+<p><a href="{% url 'projects_list' %}">Back to Project List</a></p>
