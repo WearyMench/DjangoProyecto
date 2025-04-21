@@ -6,38 +6,56 @@ A simple web application built with Django that allows you to:
 - Add tasks to each project.
 - Manage task statuses (Pending, In Progress, Completed).
 
+---
+
 ## 🚀 How to Run This Project
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
-2. (Optional) Create and activate a virtual environment:
+### 1️⃣ Clone the Repository
 
-   ```bash
-    python -m venv venv
-    source venv\Scripts\activate
-3. Install dependencies:
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+```
 
-   ```bash
-    pip install django
-4. Apply migrations and run the server:
+### 2️⃣ (Optional) Create and Activate a Virtual Environment
 
-   ```bash
-    python manage.py migrate
-    python manage.py runserver
-5. Open your browser and go to the provided url.
+```bash
+python -m venv venv
+source venv\Scripts\activate
+```
 
-✨ Tech Stack
+### 3️⃣ Install Dependencies
 
-- Python 3
-- Django 4.x
-- HTML
-- CSS
+```bash
+pip install django
+```
 
-📁 Project Structure
-- myapp/: Django app with views, models, forms, and URLs.
+### 4️⃣ Apply Migrations and Run the Server
 
-- templates/: Contains HTML templates.
+```bash
+python manage.py migrate
+python manage.py runserver
+```
 
-- db.sqlite3: Local database.
+### 5️⃣ Open Your Browser
+
+Navigate to the provided URL (e.g., `http://127.0.0.1:8000/`).
+
+---
+
+## ✨ Tech Stack
+
+- **Python** 3.x
+- **Django** 4.x
+- **HTML**
+- **CSS**
+
+---
+
+## 📁 Project Structure
+
+- **`myapp/`**: Django app containing views, models, forms, and URLs.
+- **`templates/`**: Directory for HTML templates.
+- **`db.sqlite3`**: Local SQLite database.
+
+---
