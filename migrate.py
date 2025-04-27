@@ -10,7 +10,7 @@ def run_migrations():
     # Run migrations
     execute_from_command_line(['manage.py', 'migrate'])
     
-    # Collect static files
+    # Collect static files with WhiteNoise
     execute_from_command_line(['manage.py', 'collectstatic', '--noinput', '--clear'])
 
 if __name__ == '__main__':
