@@ -1,4 +1,10 @@
-<h1>Project: {{ project.name }}</h1>
+<!-- prettier-ignore -->
+{% extends 'myapp/base.html' %}
+
+{% block title %}Project: {{ project.name }}{% endblock %}
+
+{% block content %}
+<h2>Project: {{ project.name }}</h2>
 <p>
   <a href="{% url 'edit_project' project.id %}">Edit Project</a> |
   <a
@@ -8,7 +14,7 @@
   >
 </p>
 
-<h2>Tasks</h2>
+<h3>Tasks</h3>
 <ul>
   {% for task in tasks %}
   <li>
@@ -26,10 +32,11 @@
   {% endfor %}
 </ul>
 
-<h2>Add Task</h2>
+<h3>Add Task</h3>
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit">Create Task</button>
 </form>
 
 <p><a href="{% url 'projects_list' %}">Back to Projects</a></p>
+{% endblock %}

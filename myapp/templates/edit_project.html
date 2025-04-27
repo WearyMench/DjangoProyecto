@@ -1,4 +1,10 @@
-<h1>Edit Project: {{ project.name }}</h1>
+<!-- prettier-ignore -->
+{% extends 'myapp/base.html' %}
+
+{% block title %}Edit Project{% endblock %}
+
+{% block content %}
+<h2>Edit Project: {{ project.name }}</h2>
 
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
@@ -6,3 +12,4 @@
 </form>
 
 <p><a href="{% url 'projects_list' %}">Back to Project List</a></p>
+{% endblock %}

@@ -1,4 +1,12 @@
-<h1>Projects</h1>
+<!-- prettier-ignore -->
+{% extends 'myapp/base.html' %}
+
+{% block title %}
+Projects
+{% endblock %}
+
+{% block content %}
+<h2>Projects</h2>
 <ul>
   {% for project in projects %}
   <li>
@@ -6,4 +14,5 @@
   </li>
   {% endfor %}
 </ul>
-<p><a href="{% url 'create_project' %}">+ Create new project</a></p>
+<p><a href="{% url 'create_project' %}">+ Create New Project</a></p>
+{% endblock %}
