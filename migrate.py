@@ -11,7 +11,7 @@ def run_migrations():
     execute_from_command_line(['manage.py', 'migrate'])
     
     # Collect static files
-    execute_from_command_line(['manage.py', 'collectstatic', '--noinput'])
+    execute_from_command_line(['manage.py', 'collectstatic', '--noinput', '--clear'])
 
 if __name__ == '__main__':
     run_migrations() 
