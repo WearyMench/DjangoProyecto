@@ -2,14 +2,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Create New Task{% endblock %}
+{% block title %}Delete Task{% endblock %}
 
 {% block content %}
 <div class="form-container">
-  <div class="form-header">
-    <h2>Create New Task</h2>
-    <p class="form-subtitle">Add a new task to your project</p>
-  </div>
+  <h2>Delete Task</h2>
 
   {% if messages %}
   <div class="messages">
@@ -19,22 +16,17 @@
   </div>
   {% endif %}
 
-  <form method="post">
-    {% csrf_token %} {% for field in form %}
-    <div class="form-group {% if field.errors %}has-error{% endif %}">
-      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-      {{ field }} {% if field.help_text %}
-      <small class="form-text text-muted">{{ field.help_text }}</small>
-      {% endif %} {% if field.errors %}
-      <ul class="errorlist">
-        {% for error in field.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div>
-    {% endfor %}
-    <button type="submit" class="form-submit">
+  <div class="delete-warning">
+    <p>Are you sure you want to delete the task "{{ task.title }}"?</p>
+    <p class="text-danger">This action cannot be undone.</p>
+  </div>
+
+  <form
+    method="post"
+    onsubmit="return confirm('Are you absolutely sure? This action cannot be undone.');"
+  >
+    {% csrf_token %}
+    <button type="submit" class="form-submit btn-danger">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -46,15 +38,19 @@
         stroke-linecap="round"
         stroke-linejoin="round"
       >
-        <line x1="12" y1="5" x2="12" y2="19"></line>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <path d="M3 6h18"></path>
+        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
       </svg>
-      Create Task
+      Delete Task
     </button>
   </form>
 
   <div class="form-footer">
-    <a href="{% url 'project_detail' project.id %}" class="btn btn-secondary">
+    <a
+      href="{% url 'project_detail' task.project.id %}"
+      class="btn btn-secondary"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -68,7 +64,7 @@
       >
         <path d="M19 12H5M12 19l-7-7 7-7" />
       </svg>
-      Back to Project
+      Cancel
     </a>
   </div>
 </div>

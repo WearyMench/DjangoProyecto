@@ -1,18 +1,254 @@
 <!-- prettier-ignore -->
-{% extends 'myapp/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}
-Projects
-{% endblock %}
+{% block title %}My Projects{% endblock %}
 
 {% block content %}
-<h2>Projects</h2>
-<ul>
-  {% for project in projects %}
-  <li>
-    <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
-  </li>
-  {% endfor %}
-</ul>
-<p><a href="{% url 'create_project' %}">+ Create New Project</a></p>
+<div class="projects-container">
+  <div class="projects-header">
+    <h2>My Projects</h2>
+    <a href="{% url 'create_project' %}" class="btn btn-primary">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      Create New Project
+    </a>
+  </div>
+
+  {% if projects %}
+  <div class="projects-grid">
+    {% for project in projects %}
+    <div class="project-card">
+      <div class="project-card-header">
+        <div class="project-title-section">
+          <h3>{{ project.name }}</h3>
+          <div class="project-status">
+            <span class="status-badge {{ project.get_status_display|lower }}">
+              {{ project.get_status_display }}
+            </span>
+          </div>
+        </div>
+        <div class="project-actions">
+          <a
+            href="{% url 'edit_project' project.id %}"
+            class="btn btn-icon"
+            title="Edit Project"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+              ></path>
+              <path
+                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+              ></path>
+            </svg>
+          </a>
+          <a
+            href="{% url 'delete_project' project.id %}"
+            class="btn btn-icon btn-danger"
+            title="Delete Project"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 6h18"></path>
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="project-content">
+        <p class="project-description">
+          {{ project.description|default:"No description provided" }}
+        </p>
+
+        <div class="project-stats">
+          <div class="stat-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>{{ project.get_completed_tasks_count }} completed</span>
+          </div>
+          <div class="stat-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>{{ project.get_tasks_count }} total tasks</span>
+          </div>
+        </div>
+
+        <div class="project-meta">
+          <span
+            class="date"
+            title="Created on {{ project.created_at|date:'F j, Y' }}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            {{ project.created_at|date:"M j, Y" }}
+          </span>
+          <span
+            class="date"
+            title="Last updated on {{ project.updated_at|date:'F j, Y' }}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 2H3v20h18V2z"></path>
+              <path d="M7 10h10"></path>
+              <path d="M7 14h10"></path>
+            </svg>
+            {{ project.updated_at|date:"M j, Y" }}
+          </span>
+        </div>
+      </div>
+
+      <div class="project-footer">
+        <a
+          href="{% url 'project_detail' project.id %}"
+          class="btn btn-secondary"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 3h6v6"></path>
+            <path d="M10 14L21 3"></path>
+            <path
+              d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+            ></path>
+          </svg>
+          View Details
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="no-projects">
+    <div class="no-projects-content">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="64"
+        height="64"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+        ></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+      </svg>
+      <h3>No Projects Yet</h3>
+      <p>Start by creating your first project to organize your tasks.</p>
+      <a href="{% url 'create_project' %}" class="btn btn-primary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Create Your First Project
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

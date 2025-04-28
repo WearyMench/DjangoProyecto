@@ -1,0 +1,94 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <h2>Register</h2>
+  <form method="post" id="register-form">
+    {% csrf_token %} {% for field in form %}
+    <div class="form-group {% if field.errors %}has-error{% endif %}">
+      {{ field.label_tag }} {{ field }} {% if field.errors %}
+      <ul class="errorlist">
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="form-submit">Register</button>
+  </form>
+  <div class="form-footer">
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const passwordInput = document.querySelector('input[type="password"]');
+    const formGroup = passwordInput.closest(".form-group");
+
+    function validatePassword(password) {
+      const errors = [];
+
+      if (password.length < 8) {
+        errors.push("Password must be at least 8 characters long.");
+      }
+      if (!/[A-Z]/.test(password)) {
+        errors.push("Password must contain at least one uppercase letter.");
+      }
+      if (!/[a-z]/.test(password)) {
+        errors.push("Password must contain at least one lowercase letter.");
+      }
+      if (!/[0-9]/.test(password)) {
+        errors.push("Password must contain at least one number.");
+      }
+      if (!/[!@#$%^&*]/.test(password)) {
+        errors.push(
+          "Password must contain at least one special character (!@#$%^&*)."
+        );
+      }
+
+      return errors;
+    }
+
+    function updateErrorDisplay(errors) {
+      // Remove existing error list if it exists
+      const existingErrorList = formGroup.querySelector(".errorlist");
+      if (existingErrorList) {
+        existingErrorList.remove();
+      }
+
+      // Remove error class from form group
+      formGroup.classList.remove("has-error");
+
+      if (errors.length > 0) {
+        // Create new error list
+        const errorList = document.createElement("ul");
+        errorList.className = "errorlist";
+
+        // Add each error as a list item
+        errors.forEach((error) => {
+          const li = document.createElement("li");
+          li.textContent = error;
+          errorList.appendChild(li);
+        });
+
+        // Add error list and class
+        formGroup.appendChild(errorList);
+        formGroup.classList.add("has-error");
+      }
+    }
+
+    passwordInput.addEventListener("blur", function () {
+      const password = this.value;
+      const errors = validatePassword(password);
+      updateErrorDisplay(errors);
+    });
+  });
+</script>
+{% endblock %}

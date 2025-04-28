@@ -155,6 +155,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Authentication settings
+LOGIN_REDIRECT_URL = 'projects_list'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'landing_page'
+
 # Security Settings
 if not DEBUG:
     SECURE_SSL_REDIRECT = True

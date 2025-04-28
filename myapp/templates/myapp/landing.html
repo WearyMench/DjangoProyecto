@@ -1,0 +1,77 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Welcome to My Projects App{% endblock %}
+
+{% block content %}
+<div class="landing-page">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Welcome to My Projects App</h1>
+        <p class="hero-subtitle">
+          Organize your projects and tasks efficiently
+        </p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'projects_list' %}" class="btn btn-primary btn-lg"
+          >View Your Projects</a
+        >
+        {% else %}
+        <div class="hero-buttons">
+          <a href="{% url 'login' %}" class="btn btn-primary btn-lg"
+            >Get Started</a
+          >
+          <a href="{% url 'register' %}" class="btn btn-secondary btn-lg"
+            >Create Account</a
+          >
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose My Projects App?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <h3>Project Management</h3>
+          <p>Create and organize your projects with ease</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✅</div>
+          <h3>Task Tracking</h3>
+          <p>Keep track of tasks and their progress</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌙</div>
+          <h3>Dark Mode</h3>
+          <p>Work comfortably with our dark theme support</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Secure</h3>
+          <p>Your projects are safe and private</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Get Started?</h2>
+        <p>Join now and start managing your projects effectively</p>
+        {% if not user.is_authenticated %}
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg"
+          >Sign Up Now</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

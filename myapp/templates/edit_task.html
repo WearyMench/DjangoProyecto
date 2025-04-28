@@ -1,57 +1,77 @@
 <!-- prettier-ignore -->
-{% extends 'myapp/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Edit Task{% endblock %}
 
 {% block content %}
-<div class="card">
-  <h2>Edit Task: {{ task.title }}</h2>
+<div class="form-container">
+  <div class="form-header">
+    <h2>Edit Task</h2>
+    <p class="form-subtitle">Update task details</p>
+  </div>
 
-  <form method="post" class="mt-2">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="{{ form.title.id_for_label }}">Title</label>
-      {{ form.title }}
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %} {% for field in form %}
+    <div class="form-group {% if field.errors %}has-error{% endif %}">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }} {% if field.help_text %}
+      <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %} {% if field.errors %}
+      <ul class="errorlist">
+        {% for error in field.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </div>
-
-    <div class="form-group">
-      <label for="{{ form.description.id_for_label }}">Description</label>
-      {{ form.description }}
-    </div>
-
-    <div class="form-group">
-      <label for="{{ form.due_date.id_for_label }}">Due Date</label>
-      {{ form.due_date }}
-    </div>
-
-    <div class="form-group">
-      <label for="{{ form.status.id_for_label }}">Status</label>
-      <div class="select-wrapper">{{ form.status }}</div>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    {% endfor %}
+    <button type="submit" class="form-submit">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M20 6L9 17l-5-5" />
+      </svg>
+      Save Changes
+    </button>
   </form>
-</div>
 
-<p class="mt-2">
-  <a
-    href="{% url 'project_detail' task.project.id %}"
-    class="btn btn-secondary"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+  <div class="form-footer">
+    <a
+      href="{% url 'project_detail' task.project.id %}"
+      class="btn btn-secondary"
     >
-      <path d="M19 12H5M12 19l-7-7 7-7" />
-    </svg>
-    Back to Project
-  </a>
-</p>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      Back to Project
+    </a>
+  </div>
+</div>
 {% endblock %}
